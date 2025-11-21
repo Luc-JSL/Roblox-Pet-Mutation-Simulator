@@ -9,4 +9,15 @@ RandomEvents.Events = {
     {Type = "Treasure Drop", Effect = "Award mutation materials"}
 }
 
+function RandomEvents:TriggerEvent(eventType)
+    for _, event in ipairs(self.Events) do
+        if event.Type == eventType then
+            print("Triggering event:", eventType, "Effect:", event.Effect)
+            return event.Effect
+        end
+    end
+    print("Event not found:", eventType)
+    return nil
+end
+
 return RandomEvents

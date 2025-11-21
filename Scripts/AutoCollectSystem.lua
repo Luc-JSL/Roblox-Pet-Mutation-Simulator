@@ -4,7 +4,9 @@
 local AutoCollectSystem = {}
 
 function AutoCollectSystem:Collect(zone)
-    -- Automatically collect materials from zone
+    print("Auto-collecting materials from zone:", zone.Name)
+    -- Add materials to player inventory
+    return {material = zone.ExclusiveMutation, amount = math.random(1,3)}
 end
 
 return AutoCollectSystem

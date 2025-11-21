@@ -4,7 +4,9 @@
 local FasterLevelingSystem = {}
 
 function FasterLevelingSystem:BoostLeveling(pet)
-    -- Increase pet leveling speed
+    print("Boosting leveling speed for pet:", pet.genes)
+    pet.xpBoost = true
+    return pet
 end
 
 return FasterLevelingSystem
