@@ -20,9 +20,6 @@ A unique Roblox genetics game where players mutate and combine pets in a lab to 
 - Includes a powerful pet with rare genes and abilities
 - Unlocks extra mutation slots, faster mutation times, and exclusive gene types
 
-## Pay-to-Win Elements
-- Premium pets and upgrades give a significant advantage
-- Gamepasses for extra slots, speed, and exclusive content
 
 ## Folder Structure
 - `Scripts/` - Core game logic
