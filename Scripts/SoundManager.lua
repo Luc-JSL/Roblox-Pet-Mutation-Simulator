@@ -23,21 +23,69 @@ SoundManager.Volume = 0.5
 function SoundManager:PlaySFX(name)
     local soundId = self.SFX[name]
     if soundId then
-        -- Play SFX (pseudo-code, replace with engine-specific)
-        print("Playing SFX:", soundId)
+        local sound = Instance.new("Sound")
+        sound.SoundId = soundId
+        sound.Volume = self.Volume * 0.7
+        sound.Parent = game:GetService("SoundService")
+        sound:Play()
+        
+        -- Clean up after playing
+        sound.Ended:Connect(function()
+            sound:Destroy()
+        end)
+        
+        print("Playing SFX:", name)
+    else
+        warn("SFX not found:", name)
     end
 end
 
 function SoundManager:PlayMusic(trackIndex)
-    self.CurrentMusic = self.MusicTracks[trackIndex] or self.MusicTracks[1]
-    -- Play music (pseudo-code)
-    print("Playing music:", self.CurrentMusic)
+    local newTrack = self.MusicTracks[trackIndex] or self.MusicTracks[1]
+    
+    -- Stop current music if playing
+    if self.CurrentMusicSound then
+        self.CurrentMusicSound:Stop()
+        self.CurrentMusicSound:Destroy()
+    end
+    
+    -- Create and play new music
+    self.CurrentMusicSound = Instance.new("Sound")
+    self.CurrentMusicSound.SoundId = newTrack
+    self.CurrentMusicSound.Volume = self.Volume
+    self.CurrentMusicSound.Looped = true
+    self.CurrentMusicSound.Parent = game:GetService("SoundService")
+    self.CurrentMusicSound:Play()
+    
+    self.CurrentMusic = newTrack
+    print("Playing music track:", trackIndex)
 end
 
 function SoundManager:SetVolume(vol)
     self.Volume = math.clamp(vol, 0, 1)
-    -- Set music volume (pseudo-code)
-    print("Music volume set to:", self.Volume)
+    
+    -- Update current music volume
+    if self.CurrentMusicSound then
+        self.CurrentMusicSound.Volume = self.Volume
+    end
+    
+    print("Volume set to:", self.Volume)
+end
+
+function SoundManager:StopMusic()
+    if self.CurrentMusicSound then
+        self.CurrentMusicSound:Stop()
+        self.CurrentMusicSound:Destroy()
+        self.CurrentMusicSound = nil
+    end
+end
+
+function SoundManager:FadeMusic(targetVolume, duration)
+    if not self.CurrentMusicSound then return end
+    
+    local tweenInfo = TweenInfo.new(duration or 2, Enum.EasingStyle.Quad)
+    local tween = game:GetService("TweenService"):Create(self.CurrentMusicSound, tweenInfo, {Volume = targetVolume})
+    tween:Play()
 end
 
 return SoundManager
