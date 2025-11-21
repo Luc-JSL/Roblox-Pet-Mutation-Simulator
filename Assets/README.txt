@@ -1,0 +1,1 @@
+This folder is for models, textures, and sound assets. Replace these placeholders with your own custom assets for pets, lab equipment, UI, and effects.
